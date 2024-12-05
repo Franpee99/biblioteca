@@ -11,6 +11,8 @@ class Libro extends Model
     use HasFactory;
 
     public function ejemplares(){
-        return $this->hasMany(Prestamo::class);
+        return $this->hasMany(Ejemplar::class);
     }
+
+    protected $fillable = (['titulo', 'autor']);
 }
