@@ -17,4 +17,6 @@ class Prestamo extends Model
     public function ejemplar(){
         return $this->belongsTo(Ejemplar::class);
     }
+
+    protected $fillable = (['ejemplar_id', 'cliente_id']);
 }

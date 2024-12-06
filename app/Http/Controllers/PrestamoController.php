@@ -12,7 +12,9 @@ class PrestamoController extends Controller
      */
     public function index()
     {
-        //
+        return view('prestamos.index', [
+            'prestamos' => Prestamo::all(),
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class PrestamoController extends Controller
      */
     public function create()
     {
-        //
+        return view('prestamos.create');
     }
 
     /**
@@ -28,7 +30,13 @@ class PrestamoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'ejemplar_id' => 'required|numeric|exists:ejemplars,id',
+            'cliente_id' => 'required|numeric|exists:clientes,id',
+        ]);
+        $prestamo = Prestamo::create($validated);
+        session()->flash('exito', 'Prestamo creado correctamente.');
+        return redirect()->route('prestamos.index', $prestamo);
     }
 
     /**
@@ -36,7 +44,9 @@ class PrestamoController extends Controller
      */
     public function show(Prestamo $prestamo)
     {
-        //
+        return view('prestamos.show',[
+            'prestamo' => $prestamo
+        ]);
     }
 
     /**
@@ -60,6 +70,7 @@ class PrestamoController extends Controller
      */
     public function destroy(Prestamo $prestamo)
     {
-        //
+        $prestamo->delete();
+        return redirect()->route('prestamos.index');
     }
 }
